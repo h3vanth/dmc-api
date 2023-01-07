@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "cors.allowed-origins",
+    "type": "[Ljava.lang.String;",
+    "description": "Clients that can access the app"
+  },
+  {
+    "name": "jwt.secret",
+    "type": "java.lang.String",
+    "description": "JWT token secret"
+  }
+]}
