@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import io.bbw.dmc.pojo.Product;
 import io.bbw.dmc.pojo.User;
 import io.bbw.dmc.repository.ProductRepository;
-import io.bbw.dmc.util.JwtUtil;
+import io.bbw.dmc.util.JwtUtils;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -49,7 +49,7 @@ class DmcApplicationTests {
 	@BeforeAll
 	static void setAuthToken() {
 		var httpHeaders = new HttpHeaders();
-		httpHeaders.setBearerAuth(JwtUtil.generateToken(new User("1", "hr@gmail.com",
+		httpHeaders.setBearerAuth(JwtUtils.generateToken(new User("1", "hr@gmail.com",
 				"12345678")));
 		DmcApplicationTests.httpHeaders = httpHeaders;
 	}

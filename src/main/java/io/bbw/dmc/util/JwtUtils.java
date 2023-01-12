@@ -8,7 +8,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import io.bbw.dmc.constant.SecurityConstants;
 import io.bbw.dmc.pojo.User;
 
-public class JwtUtil {
+public class JwtUtils {
 
     private static final String secret;
 

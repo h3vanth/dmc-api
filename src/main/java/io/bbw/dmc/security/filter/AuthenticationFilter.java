@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bbw.dmc.constant.SecurityConstants;
 import io.bbw.dmc.pojo.Error;
 import io.bbw.dmc.pojo.User;
-import io.bbw.dmc.util.JwtUtil;
+import io.bbw.dmc.util.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,7 +49,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
         var user = (User) authResult.getPrincipal();
-        String token = JwtUtil.generateToken(user);
+        String token = JwtUtils.generateToken(user);
         response.addHeader(SecurityConstants.AUTHORIZATION,
                 new StringBuilder().append(SecurityConstants.BEARER).append(token).toString());
         response.addHeader(SecurityConstants.CONTENT_TYPE, SecurityConstants.JSON_CONTENT);

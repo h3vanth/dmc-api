@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.bbw.dmc.constant.SecurityConstants;
-import io.bbw.dmc.util.JwtUtil;
+import io.bbw.dmc.util.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         } else {
             token = new String(request.getHeader(SecurityConstants.AUTHORIZATION).split(" ")[1]);
         }
-        var userId = JwtUtil.verifyToken(token);
+        var userId = JwtUtils.verifyToken(token);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, Arrays.asList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
