@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
@@ -45,7 +48,15 @@ public class ProductController {
     }
 
     @PostMapping("/v1/products")
-    public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product, Principal principal) {
+    public ResponseEntity<?> addProduct(@RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam("productName") String productName,
+            @RequestParam("price") BigDecimal price,
+            @RequestParam("availableQuantity") int availableQuantity,
+            @RequestParam("description") String description,
+            @RequestParam("isAvailable") boolean isAvailable,
+            Principal principal) {
+        Product product = Product.builder().productName(productName).price(price).availableQuantity(availableQuantity)
+                .description(description).isAvailable(isAvailable).build();
         return new ResponseEntity<>(productService.addProduct(product, principal.getName()), HttpStatus.CREATED);
     }
 
