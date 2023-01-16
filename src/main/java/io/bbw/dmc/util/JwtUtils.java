@@ -13,7 +13,7 @@ public class JwtUtils {
     private static final String secret;
 
     static {
-        secret = System.getenv("JWT_SECRET");
+        secret = System.getProperty("st");
     }
 
     public static String generateToken(User user) {
