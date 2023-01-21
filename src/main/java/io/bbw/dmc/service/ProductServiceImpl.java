@@ -18,7 +18,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProducts(String userId) {
-        return productRepository.findAll();
+        return productRepository.findAllByUserId(userId);
     }
 
     @Override
