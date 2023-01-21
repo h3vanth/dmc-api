@@ -50,7 +50,7 @@ class DmcApplicationTests {
 	static void setAuthToken() {
 		var httpHeaders = new HttpHeaders();
 		httpHeaders.setBearerAuth(JwtUtils.generateToken(new User("1", "hr@gmail.com",
-				"12345678")));
+				"12345678", "123456")));
 		DmcApplicationTests.httpHeaders = httpHeaders;
 	}
 

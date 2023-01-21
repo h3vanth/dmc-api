@@ -26,4 +26,8 @@ public class User {
 
     @NotBlank(message = "Password must not be blank")
     private String password;
+
+    // TODO: do min max validation wherever applicable
+    @NotBlank(message = "Passcode must not be blank")
+    private String passcode;
 }

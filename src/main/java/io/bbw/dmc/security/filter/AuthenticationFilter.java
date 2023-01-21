@@ -53,7 +53,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader(SecurityConstants.AUTHORIZATION,
                 new StringBuilder().append(SecurityConstants.BEARER).append(token).toString());
         response.addHeader(SecurityConstants.CONTENT_TYPE, SecurityConstants.JSON_CONTENT);
-        response.getWriter().write("{ \"email\": \"" + user.getEmail() + "\" }");
+        response.getWriter()
+                .write("{ \"email\": \"" + user.getEmail() + "\", \"passcode\": \"" + user.getPasscode() + "\" }");
         response.getWriter().flush();
     }
 
