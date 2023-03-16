@@ -42,6 +42,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return super.shouldNotFilter(request);
+        return request.getRequestURI().startsWith("/images");
     }
 }

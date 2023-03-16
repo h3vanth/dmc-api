@@ -39,4 +39,5 @@ public class Product {
 
     private String description;
     private int availableQuantity;
+    private String imageUrl;
 }

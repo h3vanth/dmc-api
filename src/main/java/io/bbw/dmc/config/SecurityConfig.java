@@ -30,6 +30,8 @@ public class SecurityConfig {
         http.csrf().disable().cors().configurationSource(request -> corsConfiguration).and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTRATION_ROUTE)
                 .permitAll()
+                .requestMatchers("/images/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

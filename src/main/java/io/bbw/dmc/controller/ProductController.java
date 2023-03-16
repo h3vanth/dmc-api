@@ -57,7 +57,7 @@ public class ProductController {
             Principal principal) {
         Product product = Product.builder().productName(productName).price(price).availableQuantity(availableQuantity)
                 .description(description).isAvailable(isAvailable).build();
-        return new ResponseEntity<>(productService.addProduct(product, principal.getName()), HttpStatus.CREATED);
+        return new ResponseEntity<>(productService.addProduct(product, image, principal.getName()), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/v1/products/{productIds}")

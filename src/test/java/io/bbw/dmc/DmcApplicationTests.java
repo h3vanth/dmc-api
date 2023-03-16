@@ -56,7 +56,7 @@ class DmcApplicationTests {
 
 	@Test
 	void getProductsTest() throws Exception {
-	when(productRepository.findAll()).thenReturn(Arrays.asList(new Product("123", "1", "Some product", new BigDecimal(100), false, "", 0)));
+	when(productRepository.findAll()).thenReturn(Arrays.asList(new Product("123", "1", "Some product", new BigDecimal(100), false, "", 0, "")));
 
 	RequestBuilder request = MockMvcRequestBuilders.get("/api/v1/products").headers(httpHeaders);
 	mockMvc.perform(request).andExpect(status().isOk())
@@ -70,7 +70,7 @@ class DmcApplicationTests {
 	@Test
 	void getProductByProductIdTest() throws Exception {
 	when(productRepository.findById("123")).thenReturn(Optional.of(new
-	Product("123", "1", "Some product", new BigDecimal(100), false, "", 0)));
+	Product("123", "1", "Some product", new BigDecimal(100), false, "", 0, "")));
 
 	RequestBuilder request = MockMvcRequestBuilders.get("/api/v1/products/123").headers(httpHeaders);
 	mockMvc.perform(request)
@@ -92,7 +92,7 @@ class DmcApplicationTests {
 	@Test
 	void addProductTest() throws Exception {
 		var product = new Product("234", "1", "Biryani", new BigDecimal(150), true, "",
-				0);
+				0, "");
 
 		when(productRepository.save(product)).thenReturn(product);
 
@@ -105,7 +105,7 @@ class DmcApplicationTests {
 
 	@Test
 	void addProduct_ProductNotValidTest() throws Exception {
-		var product = new Product("234", "1", "", new BigDecimal(-1), true, "", 0);
+		var product = new Product("234", "1", "", new BigDecimal(-1), true, "", 0, "");
 
 		when(productRepository.save(product)).thenReturn(product);
 
