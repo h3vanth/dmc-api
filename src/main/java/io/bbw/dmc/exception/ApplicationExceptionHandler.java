@@ -21,7 +21,7 @@ import io.bbw.dmc.pojo.Error;
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ EntityNotFoundException.class, UserAlreadyExistsException.class })
-    public ResponseEntity<Object> handleProductNotFoundException(RuntimeException exception) {
+    public ResponseEntity<Object> handleEntityNotFoundAndDuplicateExceptions(RuntimeException exception) {
         return new ResponseEntity<>(new Error(Arrays.asList(exception.getMessage())), HttpStatus.NOT_FOUND);
     }
 
