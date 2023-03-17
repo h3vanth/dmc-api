@@ -57,9 +57,8 @@ public class ProductServiceImpl implements ProductService {
         product.setUserId(userId);
         var savedProduct = productRepository.save(product);
         var fileExtension = image.getContentType().replace("image/", ".");
-        // TODO: change host
         product.setImageUrl(
-                new StringBuilder("http://localhost:8080/images/").append(savedProduct.getProductId())
+                new StringBuilder(System.getenv("HOST")).append("/images/").append(savedProduct.getProductId())
                         .append(fileExtension).toString());
         var absolutePath = new File("src/main/resources/static/images").getAbsolutePath();
         var fileName = new StringBuilder(absolutePath).append("/").append(savedProduct.getProductId())
@@ -68,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
             os.write(image.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
+            // TODO: send error response
             System.out.println(e.getMessage());
         }
         return productRepository.save(savedProduct);
