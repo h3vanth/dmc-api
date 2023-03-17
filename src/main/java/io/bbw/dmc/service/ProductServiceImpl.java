@@ -56,6 +56,9 @@ public class ProductServiceImpl implements ProductService {
     public Product addProduct(Product product, MultipartFile image, String userId) {
         product.setUserId(userId);
         var savedProduct = productRepository.save(product);
+        if (image == null) {
+            return savedProduct;
+        }
         var fileExtension = image.getContentType().replace("image/", ".");
         product.setImageUrl(
                 new StringBuilder(System.getenv("HOST")).append("/images/").append(savedProduct.getProductId())
