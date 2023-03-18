@@ -36,8 +36,8 @@ public class ProductController {
     }
 
     @GetMapping("/v1/products/{productId}")
-    public ResponseEntity<Product> getProductByProductId(@PathVariable String productId) {
-        return new ResponseEntity<>(productService.getProductByProductId(productId),
+    public ResponseEntity<Product> getProduct(@PathVariable String productId) {
+        return new ResponseEntity<>(productService.getProduct(productId),
                 HttpStatus.OK);
     }
 
@@ -48,7 +48,7 @@ public class ProductController {
     }
 
     @PostMapping("/v1/products")
-    public ResponseEntity<?> addProduct(@RequestParam(value = "image", required = false) MultipartFile image,
+    public ResponseEntity<Product> addProduct(@RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam("productName") String productName,
             @RequestParam("price") BigDecimal price,
             @RequestParam("availableQuantity") int availableQuantity,

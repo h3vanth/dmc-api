@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
             if (orderId != null) {
                 orderQuantity = orderRepository.findById(orderId).get().getQuantity();
             }
-            var product = productService.getProductByProductId(order.getProductId());
+            var product = productService.getProduct(order.getProductId());
             var availableQuantity = product.getAvailableQuantity() - (order.getQuantity() - orderQuantity);
             product.setAvailableQuantity(availableQuantity);
             if (availableQuantity == 0) {

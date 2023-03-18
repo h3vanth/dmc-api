@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductByProductId(String productId) {
+    public Product getProduct(String productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException(productId, Product.class));
     }

@@ -68,7 +68,7 @@ class DmcApplicationTests {
 	}
 
 	@Test
-	void getProductByProductIdTest() throws Exception {
+	void getProductTest() throws Exception {
 	when(productRepository.findById("123")).thenReturn(Optional.of(new
 	Product("123", "1", "Some product", new BigDecimal(100), false, "", 0, "")));
 
@@ -81,7 +81,7 @@ class DmcApplicationTests {
 	}
 
 	@Test
-	void getProductByProductId_InvalidProductIdTest() throws Exception {
+	void getProduct_InvalidProductIdTest() throws Exception {
 	when(productRepository.findById("234")).thenReturn(Optional.empty());
 
 	RequestBuilder request = MockMvcRequestBuilders.get("/api/v1/products/234").headers(httpHeaders);

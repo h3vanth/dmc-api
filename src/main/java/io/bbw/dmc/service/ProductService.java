@@ -9,7 +9,7 @@ import io.bbw.dmc.pojo.Product;
 public interface ProductService {
     List<Product> getProducts(String userId);
 
-    Product getProductByProductId(String productId);
+    Product getProduct(String productId);
 
     void updateProduct(Product product);
 
