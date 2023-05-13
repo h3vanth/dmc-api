@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -81,5 +82,24 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.save(savedProduct);
         simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(userId).append("/products").toString(), getProducts(userId));
+    }
+
+    @Override
+    public void removeCategory(String productId, String category) {
+        productRepository.findById(productId)
+                .ifPresentOrElse(
+                        product -> {
+                            product.setCategories(
+                                    Arrays.stream(product.getCategories())
+                                    .filter(cat -> !cat.equals(category))
+                                    .toArray(String[]::new));
+                            productRepository.save(product);
+                            Principal principal = SecurityContextHolder.getContext().getAuthentication();
+                            simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(principal.getName()).append("/products").toString(), getProducts(principal.getName()));
+                        },
+                        () -> {
+                            throw new EntityNotFoundException(productId, Product.class);
+                        }
+                );
     }
 }

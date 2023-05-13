@@ -68,4 +68,10 @@ public class ProductController {
         productService.deleteProducts(productIds);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/v1/products/{productId}/categories/{category}")
+    public ResponseEntity<?> removeCategory(@PathVariable String productId, @PathVariable String category) {
+        productService.removeCategory(productId, category);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

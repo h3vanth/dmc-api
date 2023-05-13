@@ -16,4 +16,6 @@ public interface ProductService {
     void addProduct(Product product, MultipartFile image, String userId);
 
     void deleteProducts(String productIds);
+
+    void removeCategory(String productId, String category);
 }
