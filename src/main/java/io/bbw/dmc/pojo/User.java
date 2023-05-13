@@ -30,4 +30,6 @@ public class User {
     // TODO: do min max validation wherever applicable
     @NotBlank(message = "Passcode must not be blank")
     private String passcode;
+
+    private String[] categories;
 }

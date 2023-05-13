@@ -1,5 +1,7 @@
 package io.bbw.dmc.service;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(email, User.class));
+    }
+
+    @Override
+    public String[] getCategories(String userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return user.get().getCategories();
+        }
+        throw new EntityNotFoundException(userId, User.class);
+    }
+
+    @Override
+    public void updateCategories(String[] categories, String userId) {
+        userRepository.findById(userId).ifPresentOrElse(user -> {
+            user.setCategories(categories);
+            userRepository.save(user);
+        }, () -> {
+            throw new EntityNotFoundException(userId, User.class);
+        });
     }
 }

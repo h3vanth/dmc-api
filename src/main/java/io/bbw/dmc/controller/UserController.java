@@ -1,8 +1,12 @@
 package io.bbw.dmc.controller;
 
+import java.security.Principal;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +27,16 @@ public class UserController {
     public ResponseEntity<HttpStatus> createUser(@Valid @RequestBody User user) {
         userService.createUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/v1/categories")
+    public ResponseEntity<String[]> getCategories(Principal principal) {
+        return ResponseEntity.ok(userService.getCategories(principal.getName()));
+    }
+
+    @PutMapping("/v1/categories")
+    public ResponseEntity<HttpStatus> updateCategories(@RequestBody String[] categories, Principal principal) {
+        userService.updateCategories(categories, principal.getName());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
