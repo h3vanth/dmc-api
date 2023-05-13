@@ -13,7 +13,7 @@ public interface ProductService {
 
     void updateProduct(Product product);
 
-    Product addProduct(Product product, MultipartFile image, String userId);
+    void addProduct(Product product, MultipartFile image, String userId);
 
     void deleteProducts(String productIds);
 }

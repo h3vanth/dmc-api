@@ -55,9 +55,11 @@ public class ProductController {
             @RequestParam("description") String description,
             @RequestParam("isAvailable") boolean isAvailable,
             Principal principal) {
+        String userId = principal.getName();
         Product product = Product.builder().productName(productName).price(price).availableQuantity(availableQuantity)
-                .description(description).isAvailable(isAvailable).build();
-        return new ResponseEntity<>(productService.addProduct(product, image, principal.getName()), HttpStatus.CREATED);
+                .description(description).isAvailable(isAvailable).userId(userId).build();
+        productService.addProduct(product, image, userId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/v1/products/{productIds}")
