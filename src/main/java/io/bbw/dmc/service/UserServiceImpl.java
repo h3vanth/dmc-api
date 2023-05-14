@@ -2,6 +2,7 @@ package io.bbw.dmc.service;
 
 import java.util.Optional;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final SimpMessagingTemplate simpMessagingTemplate;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -46,6 +48,7 @@ public class UserServiceImpl implements UserService {
         userRepository.findById(userId).ifPresentOrElse(user -> {
             user.setCategories(categories);
             userRepository.save(user);
+            simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(userId).append("/categories").toString(), getCategories(userId));
         }, () -> {
             throw new EntityNotFoundException(userId, User.class);
         });
