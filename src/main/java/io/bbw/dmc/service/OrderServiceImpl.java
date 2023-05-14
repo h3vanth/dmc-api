@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
             order.setUserId(userId);
         }
         orderRepository.saveAll(Arrays.asList(orders));
-        messageService.sendMessage(userId);
+        messageService.sendProducts(userId);
         // Maybe sessionId can be sent in headers
         return orderRepository.findAllBySessionIdAndUserId(orders[0].getSessionId(), userId);
     }
