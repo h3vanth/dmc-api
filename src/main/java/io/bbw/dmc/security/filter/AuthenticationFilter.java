@@ -1,7 +1,6 @@
 package io.bbw.dmc.security.filter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Base64;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +16,6 @@ import io.bbw.dmc.model.Error;
 import io.bbw.dmc.model.User;
 import io.bbw.dmc.util.JwtUtils;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -47,7 +45,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-            Authentication authResult) throws IOException, ServletException {
+            Authentication authResult) throws IOException {
         var user = (User) authResult.getPrincipal();
         String token = JwtUtils.generateToken(user);
         response.addHeader(SecurityConstants.AUTHORIZATION,
@@ -60,9 +58,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-            AuthenticationException failed) throws IOException, ServletException {
+            AuthenticationException failed) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write(objectMapper.writeValueAsString(new Error(Arrays.asList(failed.getMessage()))));
+        response.getWriter().write(objectMapper.writeValueAsString(new Error(failed.getMessage())));
         response.getWriter().flush();
     }
 }

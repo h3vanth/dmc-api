@@ -11,13 +11,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Error {
-    private List<String> errorMessages;
+    private List<String> messages;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date timestamp;
 
-    public Error(List<String> errorMessages) {
+    public Error(String message) {
         timestamp = new Date();
-        this.errorMessages = errorMessages;
+        this.messages = List.of(message);
+    }
+
+    public Error(List<String> messages) {
+        timestamp = new Date();
+        this.messages = messages;
     }
 }

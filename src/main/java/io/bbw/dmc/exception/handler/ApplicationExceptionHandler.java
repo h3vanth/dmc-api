@@ -1,9 +1,10 @@
-package io.bbw.dmc.exception;
+package io.bbw.dmc.exception.handler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import io.bbw.dmc.exception.EntityNotFoundException;
+import io.bbw.dmc.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -22,7 +23,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler({ EntityNotFoundException.class, UserAlreadyExistsException.class })
     public ResponseEntity<Object> handleEntityNotFoundAndDuplicateExceptions(RuntimeException exception) {
-        return new ResponseEntity<>(new Error(Arrays.asList(exception.getMessage())), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new Error(exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @Override
