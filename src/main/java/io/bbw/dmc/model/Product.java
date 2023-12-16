@@ -1,4 +1,4 @@
-package io.bbw.dmc.pojo;
+package io.bbw.dmc.model;
 
 import java.math.BigDecimal;
 

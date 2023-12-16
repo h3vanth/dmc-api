@@ -13,7 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import io.bbw.dmc.constant.SecurityConstants;
-import io.bbw.dmc.pojo.Error;
+import io.bbw.dmc.model.Error;
 
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.bbw.dmc.pojo.User;
+import io.bbw.dmc.model.User;
 import io.bbw.dmc.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -22,8 +22,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 // import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
-import io.bbw.dmc.pojo.Product;
-import io.bbw.dmc.pojo.User;
+import io.bbw.dmc.model.Product;
+import io.bbw.dmc.model.User;
 import io.bbw.dmc.repository.ProductRepository;
 import io.bbw.dmc.util.JwtUtils;
 

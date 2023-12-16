@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import io.bbw.dmc.pojo.Order;
+import io.bbw.dmc.model.Order;
 import io.bbw.dmc.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 

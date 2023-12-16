@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import io.bbw.dmc.exception.EntityNotFoundException;
-import io.bbw.dmc.pojo.Product;
+import io.bbw.dmc.model.Product;
 import io.bbw.dmc.repository.ProductRepository;
 
 @Service

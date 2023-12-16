@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import io.bbw.dmc.pojo.Order;
+import io.bbw.dmc.model.Order;
 import io.bbw.dmc.service.OrderService;
 import lombok.RequiredArgsConstructor;
 

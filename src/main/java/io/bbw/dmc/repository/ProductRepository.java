@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import io.bbw.dmc.pojo.Product;
+import io.bbw.dmc.model.Product;
 
 public interface ProductRepository extends MongoRepository<Product, String> {
 

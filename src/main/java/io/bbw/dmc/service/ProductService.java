@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import io.bbw.dmc.pojo.Product;
+import io.bbw.dmc.model.Product;
 
 public interface ProductService {
     List<Product> getProducts(String userId);

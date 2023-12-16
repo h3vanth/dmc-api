@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import io.bbw.dmc.exception.EntityNotFoundException;
 import io.bbw.dmc.exception.UserAlreadyExistsException;
-import io.bbw.dmc.pojo.User;
+import io.bbw.dmc.model.User;
 import io.bbw.dmc.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 

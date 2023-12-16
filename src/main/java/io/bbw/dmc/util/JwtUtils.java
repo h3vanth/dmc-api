@@ -6,7 +6,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import io.bbw.dmc.constant.SecurityConstants;
-import io.bbw.dmc.pojo.User;
+import io.bbw.dmc.model.User;
 
 public class JwtUtils {
 

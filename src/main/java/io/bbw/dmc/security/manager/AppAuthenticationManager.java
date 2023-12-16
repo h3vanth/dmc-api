@@ -8,7 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import io.bbw.dmc.pojo.User;
+import io.bbw.dmc.model.User;
 import io.bbw.dmc.service.UserService;
 import lombok.RequiredArgsConstructor;
 

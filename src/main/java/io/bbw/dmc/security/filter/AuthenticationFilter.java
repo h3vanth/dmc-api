@@ -13,8 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.bbw.dmc.constant.SecurityConstants;
-import io.bbw.dmc.pojo.Error;
-import io.bbw.dmc.pojo.User;
+import io.bbw.dmc.model.Error;
+import io.bbw.dmc.model.User;
 import io.bbw.dmc.util.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
