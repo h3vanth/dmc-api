@@ -16,7 +16,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @ToString
 public class Order {
-
     @Id
     private String orderId;
     private String userId;
@@ -25,4 +24,5 @@ public class Order {
     private int quantity;
     private BigDecimal price;
     private String sessionId;
+    private OrderStatus orderStatus;
 }

@@ -18,7 +18,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(exclude = {"password", "passcode"})
 public class User {
-
     @Id
     private String userId;
 
