@@ -11,6 +11,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import io.bbw.dmc.event.handler.EventHandler;
+import io.bbw.dmc.event.producer.ProductEventProducer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,9 +27,9 @@ import io.bbw.dmc.repository.ProductRepository;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ProductRepository productRepository;
+    private final EventHandler eventHandler;
 
     @Override
     public List<Product> getProducts(String userId) {
@@ -44,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> prod = productRepository.findById(product.getProductId());
         if (prod.isPresent()) {
             productRepository.save(product);
+            eventHandler.emitEvent(ProductEventProducer.produceProductUpdatedEvent(prod.get(), product));
         } else {
             throw new EntityNotFoundException(product.getProductId(), Product.class);
         }
@@ -55,7 +59,11 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProducts(String productIds) {
         productRepository.deleteAll(
                 Stream.of(productIds.split("-"))
-                        .map(productId -> Product.builder().productId(productId).build())
+                        .map(productId -> {
+                            var product = Product.builder().productId(productId).build();
+                            eventHandler.emitEvent(ProductEventProducer.produceProductDeletedEvent(product));
+                            return product;
+                        })
                         .collect(Collectors.toList()));
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(principal.getName()).append("/products").toString(), getProducts(principal.getName()));
@@ -64,6 +72,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addProduct(Product product, MultipartFile image, String userId) {
         var savedProduct = productRepository.save(product);
+        eventHandler.emitEvent(ProductEventProducer.produceProductCreatedEvent(savedProduct));
         if (image == null) {
             simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(userId).append("/products").toString(), getProducts(userId));
             return;
@@ -89,11 +98,14 @@ public class ProductServiceImpl implements ProductService {
         productRepository.findById(productId)
                 .ifPresentOrElse(
                         product -> {
+                            var productBeforeUpdate = new Product();
+                            BeanUtils.copyProperties(product, productBeforeUpdate);
                             product.setCategories(
                                     Arrays.stream(product.getCategories())
-                                    .filter(cat -> !cat.equals(category))
-                                    .toArray(String[]::new));
+                                            .filter(cat -> !cat.equals(category))
+                                            .toArray(String[]::new));
                             productRepository.save(product);
+                            eventHandler.emitEvent(ProductEventProducer.produceProductCategoryRemovalEvent(productBeforeUpdate, product));
                             Principal principal = SecurityContextHolder.getContext().getAuthentication();
                             simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(principal.getName()).append("/products").toString(), getProducts(principal.getName()));
                         },
