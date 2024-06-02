@@ -1,5 +1,9 @@
 name: Java CI with Maven
 
+env:
+  DB_URI: 'mongodb://localhost:27017'
+  DB_NAME: 'test'
+
 on:
   push:
     branches: [ "development" ]
