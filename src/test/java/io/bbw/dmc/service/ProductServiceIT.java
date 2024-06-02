@@ -2,24 +2,18 @@ package io.bbw.dmc.service;
 
 import io.bbw.dmc.exception.EntityNotFoundException;
 import io.bbw.dmc.model.Product;
-import io.bbw.dmc.model.User;
-import io.bbw.dmc.util.JwtUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpHeaders;
 
 import java.math.BigDecimal;
 
 @SpringBootTest
 public class ProductServiceIT {
-    private static HttpHeaders httpHeaders;
-
     private static final Product PRODUCT_1 = new Product("123", "1", "Biryani", new BigDecimal(150), true, "", 0, "", null);
 
     @Autowired
@@ -27,14 +21,6 @@ public class ProductServiceIT {
 
     @Autowired
     private ProductService productService;
-
-    @BeforeAll
-    static void setupAuthToken() {
-        JwtUtils.setSecret("8a48UWvG#s:@2");
-        var httpHeaders = new HttpHeaders();
-        httpHeaders.setBearerAuth(JwtUtils.generateToken(new User("1", "hr@gmail.com", "12345678", "123456", null)));
-        ProductServiceIT.httpHeaders = httpHeaders;
-    }
 
     @AfterEach
     public void afterEach() {

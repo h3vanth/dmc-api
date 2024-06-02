@@ -9,7 +9,6 @@ import io.bbw.dmc.constant.SecurityConstants;
 import io.bbw.dmc.model.User;
 
 public class JwtUtils {
-
     private static String JWT_SECRET = System.getenv("JWT_SECRET");
 
     public static String generateToken(User user) {
@@ -21,9 +20,5 @@ public class JwtUtils {
     public static String verifyToken(String token) {
         return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(token)
                 .getSubject();
-    }
-
-    public static void setSecret(String secret) {
-        JWT_SECRET = secret;
     }
 }
