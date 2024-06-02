@@ -17,9 +17,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    # For tests
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.11.0
+      with:
+        mongodb-version: '7.0'
     - name: Build app
       run: mvn clean install
-        
-      
-    
-    
