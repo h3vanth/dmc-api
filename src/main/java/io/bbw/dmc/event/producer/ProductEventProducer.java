@@ -1,9 +1,6 @@
 package io.bbw.dmc.event.producer;
 
-import io.bbw.dmc.event.ProductCategoryRemovalEvent;
-import io.bbw.dmc.event.ProductCreatedEvent;
-import io.bbw.dmc.event.ProductDeletedEvent;
-import io.bbw.dmc.event.ProductUpdatedEvent;
+import io.bbw.dmc.event.*;
 import io.bbw.dmc.model.Product;
 import org.springframework.beans.BeanUtils;
 
@@ -29,10 +26,10 @@ public class ProductEventProducer {
         return event;
     }
 
-    public static ProductCategoryRemovalEvent produceProductCategoryRemovalEvent(Product productBeforeUpdate, Product product) {
-        ProductCategoryRemovalEvent event = new ProductCategoryRemovalEvent();
+    public static ProductCategoryRemovedEvent produceProductCategoryRemovedEvent(String[] categoriesBeforeUpdate, Product product) {
+        ProductCategoryRemovedEvent event = new ProductCategoryRemovedEvent();
         BeanUtils.copyProperties(product, event);
-        event.setCategoriesBeforeRemoval(productBeforeUpdate.getCategories());
+        event.setCategoriesBeforeUpdate(categoriesBeforeUpdate);
         return event;
     }
 }

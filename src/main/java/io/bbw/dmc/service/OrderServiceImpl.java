@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    private final MessageService messageService;
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final EventHandler eventHandler;
@@ -47,7 +46,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         orderRepository.saveAll(Arrays.asList(orders));
-        messageService.sendProducts(userId);
         eventHandler.emitEvents(OrderEventProducer.produceOrderPlacedEvents(orders));
         // Maybe sessionId can be sent in headers
         return orderRepository.findAllBySessionIdAndUserId(orders[0].getSessionId(), userId);

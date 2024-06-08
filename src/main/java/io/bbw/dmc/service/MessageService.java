@@ -1,19 +1,23 @@
 package io.bbw.dmc.service;
 
+import io.bbw.dmc.event.Event;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MessageService {
-
-    private final ProductService productService;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public void sendProducts(String userId) {
-        // NOTE: StringBuilder - fast but not thread safe
-        simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(userId).append("/products").toString(), productService.getProducts(userId));
+    public void sendMessage(String prefix, Object payload) {
+        String userId = null;
+        if (payload instanceof Event event) {
+            userId = event.getUserId();
+        }
+        simpMessagingTemplate.convertAndSend("/" + userId + prefix, payload);
     }
 }

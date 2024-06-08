@@ -15,7 +15,7 @@ public class EventHandler {
     private final EventBus eventBus;
 
     public void emitEvent(Event event) {
-        log.info("Emitting event {}", event);
+        log.info("[{}] Emitting event {}", Thread.currentThread().getName(), event);
         eventBus.post(event);
     }
 

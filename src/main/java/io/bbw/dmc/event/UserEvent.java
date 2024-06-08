@@ -9,4 +9,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class UserEvent extends Event {
     protected String email;
+
+    public UserEvent(String type) {
+        super(type);
+    }
 }

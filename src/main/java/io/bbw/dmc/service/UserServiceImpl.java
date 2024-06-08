@@ -1,23 +1,20 @@
 package io.bbw.dmc.service;
 
-import java.util.Optional;
-
 import io.bbw.dmc.event.handler.EventHandler;
 import io.bbw.dmc.event.producer.UserEventProducer;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import io.bbw.dmc.exception.EntityNotFoundException;
 import io.bbw.dmc.exception.UserAlreadyExistsException;
 import io.bbw.dmc.model.User;
 import io.bbw.dmc.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final SimpMessagingTemplate simpMessagingTemplate;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EventHandler eventHandler;
@@ -50,7 +47,7 @@ public class UserServiceImpl implements UserService {
         userRepository.findById(userId).ifPresentOrElse(user -> {
             user.setCategories(categories);
             userRepository.save(user);
-            simpMessagingTemplate.convertAndSend(new StringBuilder().append("/topic/").append(userId).append("/categories").toString(), getCategories(userId));
+            eventHandler.emitEvent(UserEventProducer.produceProductCategoryCreatedEvent(user));
         }, () -> {
             throw new EntityNotFoundException(userId, User.class);
         });

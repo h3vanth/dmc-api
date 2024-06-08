@@ -13,14 +13,13 @@ import java.util.concurrent.Executors;
 
 @Configuration
 public class EventConfig {
-
     @Bean
-    public EventBus eventBus() {
-        EventBus eventBus = new AsyncEventBus(Executors.newFixedThreadPool(4));
-        eventBus.register(new UserEventListener());
-        eventBus.register(new ProductEventListener());
-        eventBus.register(new OrderEventListener());
-        eventBus.register(new DeadEventListener());
+    public EventBus eventBus(UserEventListener userEventListener, ProductEventListener productEventListener, OrderEventListener orderEventListener, DeadEventListener deadEventListener) {
+        EventBus eventBus = new AsyncEventBus(Executors.newFixedThreadPool(1));
+        eventBus.register(userEventListener);
+        eventBus.register(productEventListener);
+        eventBus.register(orderEventListener);
+        eventBus.register(deadEventListener);
         return eventBus;
     }
 }

@@ -9,5 +9,11 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 public class ProductUpdatedEvent extends ProductEvent {
+    public static final String TYPE = "ProductUpdated";
+
     private Product productBeforeUpdate;
+
+    public ProductUpdatedEvent() {
+        super(TYPE);
+    }
 }
