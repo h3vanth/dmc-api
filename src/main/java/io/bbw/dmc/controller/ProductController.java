@@ -63,9 +63,10 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // Check length restrictions
     @DeleteMapping("/v1/products/{productIds}")
-    public ResponseEntity<Product> deleteProducts(@PathVariable String productIds) {
-        productService.deleteProducts(productIds);
+    public ResponseEntity<Product> deleteProducts(@PathVariable String productIds, Principal principal) {
+        productService.deleteProducts(productIds, principal.getName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

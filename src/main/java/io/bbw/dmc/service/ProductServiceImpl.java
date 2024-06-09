@@ -48,11 +48,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProducts(String productIds) {
+    public void deleteProducts(String productIds, String userId) {
         productRepository.deleteAll(
                 Stream.of(productIds.split("-"))
                         .map(productId -> {
-                            var product = Product.builder().productId(productId).build();
+                            var product = Product.builder().productId(productId).userId(userId).build();
                             eventHandler.emitEvent(ProductEventProducer.produceProductDeletedEvent(product));
                             return product;
                         })
