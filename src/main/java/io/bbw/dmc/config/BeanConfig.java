@@ -2,6 +2,8 @@ package io.bbw.dmc.config;
 
 import java.util.Arrays;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,7 +13,6 @@ import io.bbw.dmc.constant.SecurityConstants;
 
 @Configuration
 public class BeanConfig {
-
     @Bean
     public CorsConfiguration corsConfiguration() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -25,5 +26,11 @@ public class BeanConfig {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        // TODO: Write a custom deserializer / see if we can configure the result
+        return new ObjectMapper().registerModule(new JodaModule());
     }
 }
