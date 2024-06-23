@@ -1,7 +1,6 @@
 package io.bbw.dmc.event.listener;
 
-import io.bbw.dmc.event.Event;
-import io.bbw.dmc.event.ProductCategoryCreatedEvent;
+import io.bbw.dmc.event.*;
 import io.bbw.dmc.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +16,8 @@ public class UserEventListener implements Listener {
     public void handleEvent(Event event) {
         if (event instanceof ProductCategoryCreatedEvent) {
             messageService.sendMessage("/categories", event);
+        } else if (event instanceof UserConnectedEvent || event instanceof UserDisconnectEvent || event instanceof UserSubscribeEvent) {
+            messageService.sendMessage("/user-sessions", event);
         }
     }
 }

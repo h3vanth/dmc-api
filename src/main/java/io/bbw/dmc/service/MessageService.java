@@ -13,10 +13,8 @@ public class MessageService {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     public void sendMessage(String prefix, Object payload) {
-        String userId = null;
         if (payload instanceof Event event) {
-            userId = event.getUserId();
+            simpMessagingTemplate.convertAndSend("/" + event.getUserId() + prefix, payload);
         }
-        simpMessagingTemplate.convertAndSend("/" + userId + prefix, payload);
     }
 }
