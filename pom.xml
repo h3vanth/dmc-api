@@ -113,6 +113,13 @@
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/h3vanth/maven-artifacts</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
