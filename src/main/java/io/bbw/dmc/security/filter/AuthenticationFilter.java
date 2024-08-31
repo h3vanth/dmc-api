@@ -3,6 +3,7 @@ package io.bbw.dmc.security.filter;
 import java.io.IOException;
 import java.util.Base64;
 
+import io.formulate.web.common.error.AppError;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,7 +13,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.bbw.dmc.constant.SecurityConstants;
-import io.bbw.dmc.model.Error;
 import io.bbw.dmc.model.User;
 import io.bbw.dmc.util.JwtUtils;
 import jakarta.servlet.FilterChain;
@@ -60,7 +60,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write(objectMapper.writeValueAsString(new Error(failed.getMessage())));
+        response.getWriter().write(objectMapper.writeValueAsString(new AppError(failed.getMessage())));
         response.getWriter().flush();
     }
 }

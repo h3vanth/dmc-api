@@ -1,16 +1,19 @@
 package io.bbw.dmc.service;
 
-import io.bbw.dmc.event.handler.EventHandler;
 import io.bbw.dmc.event.producer.UserEventProducer;
-import io.bbw.dmc.exception.EntityNotFoundException;
-import io.bbw.dmc.exception.UserAlreadyExistsException;
+import io.bbw.dmc.exception.user.UserExceptionCode;
 import io.bbw.dmc.model.User;
 import io.bbw.dmc.repository.UserRepository;
+import io.formulate.common.event.EventHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static io.bbw.dmc.exception.user.UserExceptionContextKey.EMAIL;
+import static io.bbw.dmc.exception.user.UserExceptionContextKey.VALUE;
+import static io.formulate.web.common.exception.ExceptionBuilder.exception;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new UserAlreadyExistsException(user.getEmail());
+        String email = user.getEmail();
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw exception(UserExceptionCode.USER_ALREADY_EXISTS).put(EMAIL, email).build();
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         eventHandler.emitEvent(UserEventProducer.produceUserCreatedEvent(userRepository.save(user)));
@@ -30,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(email, User.class));
+        return userRepository.findByEmail(email).orElseThrow(() -> exception(UserExceptionCode.USER_NOT_FOUND).put(VALUE, email).build());
     }
 
     @Override
@@ -39,7 +43,7 @@ public class UserServiceImpl implements UserService {
         if (user.isPresent()) {
             return user.get().getCategories();
         }
-        throw new EntityNotFoundException(userId, User.class);
+        throw exception(UserExceptionCode.USER_NOT_FOUND).put(VALUE, userId).build();
     }
 
     @Override
@@ -49,7 +53,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             eventHandler.emitEvent(UserEventProducer.produceProductCategoryCreatedEvent(user));
         }, () -> {
-            throw new EntityNotFoundException(userId, User.class);
+            throw exception(UserExceptionCode.USER_NOT_FOUND).put(VALUE, userId).build();
         });
     }
 }

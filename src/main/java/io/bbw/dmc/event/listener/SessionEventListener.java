@@ -4,7 +4,7 @@ import io.bbw.dmc.event.SessionEvent;
 import io.bbw.dmc.event.UserConnectedEvent;
 import io.bbw.dmc.event.UserDisconnectEvent;
 import io.bbw.dmc.event.UserSubscribeEvent;
-import io.bbw.dmc.event.handler.EventHandler;
+import io.formulate.common.event.EventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

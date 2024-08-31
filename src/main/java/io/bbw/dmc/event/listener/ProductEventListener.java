@@ -2,6 +2,8 @@ package io.bbw.dmc.event.listener;
 
 import io.bbw.dmc.event.*;
 import io.bbw.dmc.service.MessageService;
+import io.formulate.common.event.Event;
+import io.formulate.common.event.Listener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

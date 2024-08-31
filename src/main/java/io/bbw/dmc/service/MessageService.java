@@ -1,6 +1,6 @@
 package io.bbw.dmc.service;
 
-import io.bbw.dmc.event.Event;
+import io.formulate.common.event.Event;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

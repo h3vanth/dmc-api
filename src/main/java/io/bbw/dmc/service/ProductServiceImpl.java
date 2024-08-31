@@ -1,10 +1,10 @@
 package io.bbw.dmc.service;
 
-import io.bbw.dmc.event.handler.EventHandler;
 import io.bbw.dmc.event.producer.ProductEventProducer;
-import io.bbw.dmc.exception.EntityNotFoundException;
+import io.bbw.dmc.exception.product.ProductExceptionCode;
 import io.bbw.dmc.model.Product;
 import io.bbw.dmc.repository.ProductRepository;
+import io.formulate.common.event.EventHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static io.bbw.dmc.exception.product.ProductExceptionContextKey.ID;
+import static io.formulate.web.common.exception.ExceptionBuilder.exception;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProduct(String productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException(productId, Product.class));
+                .orElseThrow(() -> exception(ProductExceptionCode.PRODUCT_NOT_FOUND).put(ID, productId).build());
     }
 
     @Override
@@ -43,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
             productRepository.save(product);
             eventHandler.emitEvent(ProductEventProducer.produceProductUpdatedEvent(prod.get(), product));
         } else {
-            throw new EntityNotFoundException(product.getProductId(), Product.class);
+            throw exception(ProductExceptionCode.PRODUCT_NOT_FOUND).put(ID, product.getProductId()).build();
         }
     }
 
@@ -95,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
                             eventHandler.emitEvent(ProductEventProducer.produceProductCategoryRemovedEvent(categoriesBeforeUpdate, productRepository.save(product)));
                         },
                         () -> {
-                            throw new EntityNotFoundException(productId, Product.class);
+                            throw exception(ProductExceptionCode.PRODUCT_NOT_FOUND).put(ID, productId).build();
                         }
                 );
     }

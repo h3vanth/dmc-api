@@ -1,6 +1,6 @@
 FROM maven:3.8.7 AS build
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn -s /etc/secrets/mvnsettings.xml clean package -DskipTests
 
 FROM amazoncorretto:17
 COPY --from=build /target/dmc-0.0.1-SNAPSHOT.jar app.jar

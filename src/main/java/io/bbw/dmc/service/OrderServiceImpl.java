@@ -3,11 +3,11 @@ package io.bbw.dmc.service;
 import java.util.Arrays;
 import java.util.List;
 
-import io.bbw.dmc.event.handler.EventHandler;
 import io.bbw.dmc.event.producer.OrderEventProducer;
 import io.bbw.dmc.event.producer.ProductEventProducer;
 import io.bbw.dmc.model.OrderStatus;
 import io.bbw.dmc.model.Product;
+import io.formulate.common.event.EventHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

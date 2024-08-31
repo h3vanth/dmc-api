@@ -1,7 +1,7 @@
 package io.bbw.dmc.service;
 
-import io.bbw.dmc.exception.EntityNotFoundException;
 import io.bbw.dmc.model.Product;
+import io.formulate.web.common.exception.AppException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,8 @@ public class ProductServiceIT {
 
     @Test
     void getProduct_InvalidProductIdTest() {
-        Assertions.assertThrows(EntityNotFoundException.class, () -> {
+        // Assert the error code
+        Assertions.assertThrows(AppException.class, () -> {
             productService.getProduct("234");
         });
     }
